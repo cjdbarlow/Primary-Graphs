@@ -1,0 +1,46 @@
+\documentclass{standalone}
+\usepackage{pgfplots}
+\usetikzlibrary{shapes.geometric, intersections}
+\pgfplotsset{compat=1.7}
+
+\begin{document}
+\begin{tikzpicture}
+
+    \begin{axis}[
+        axis x line=middle,
+        axis y line=middle,
+        x tick label style={/pgf/number format/fixed,
+                            /pgf/number format/fixed zerofill,
+                            /pgf/number format/precision=1},
+        y tick label style={/pgf/number format/fixed,
+                            /pgf/number format/fixed zerofill,
+                            /pgf/number format/precision=0},
+        grid = major,
+        grid style={dashed, gray!30},
+        xmin=0,     % start the diagram at this x-coordinate
+        xmax= 1,    % end   the diagram at this x-coordinate
+        ymin= 0,     % start the diagram at this y-coordinate
+        ymax= 100,   % end   the diagram at this y-coordinate
+        %axis background/.style={fill=white},
+    	  x label style={at={(axis description cs:0.5,-0.1)},anchor=north},
+	  y label style={at={(axis description cs:-0.1,.5)},rotate=90,anchor=south},
+	  xticklabels={},
+	 yticklabels={},
+	 ylabel near ticks,
+	xlabel near ticks,
+        xlabel=Log\textsubscript{10}Dose,
+        ylabel=Response (\%),
+        tick align=outside,
+        enlargelimits=false]
+	\coordinate (o) at (0,0);
+      \addplot[domain=0:0.4, blue, thick,samples=500] {100*(1/(1+exp(-30*(x-0.2))))} node[circle,fill=blue,inner sep=0pt,minimum size=5pt,pos=0.5](node1){};
+	\draw[blue, thin, dashed] (node1) -- (node1 |- o) node[above right]{E\textsubscript{D}50};
+	\addplot[domain=0.4:0.9, red, thick,samples=500] {100*(1/(1+exp(-30*((x/1.3)-0.5))))} node[circle,fill=red,inner sep=0pt,minimum size=5pt,pos=0.5](node2){};
+	\draw[red, thin, dashed] (node2) -- (node2 |- o) node[above right]{L\textsubscript{D}50};
+	\draw[black!60!green, thin, dashed] (node1) -- (node2) node[above left]{};
+
+
+\end{axis}
+
+\end{tikzpicture} 
+\end{document}

@@ -1,0 +1,85 @@
+\documentclass{standalone}
+\usepackage{pgfplots}
+\usetikzlibrary{intersections,calc,matrix,arrows,decorations.pathmorphing}
+\usepgfplotslibrary{fillbetween}
+\pgfplotsset{compat=1.7}
+
+\tikzset{
+  declare function={
+  	EDPVR(\x, \C)= -0.4 - (\C/-0.0346)*(1 - e^(+0.0345*\x));
+  	}
+}
+
+
+
+\begin{document}
+\begin{tikzpicture}
+
+\begin{axis}[
+        axis lines=middle,
+        grid = major,
+        grid style={dashed, gray!30},
+	ymin = 0,
+	ymax = 150,
+	xmin = 20,
+	xmax =180,
+	 ylabel near ticks,
+	xlabel near ticks,
+	extra y ticks={120},
+	extra x ticks={120},
+        xlabel=Volume (ml),
+        ylabel=Pressure (mmHg),
+        tick align=outside,
+        enlargelimits=false,
+	legend pos= north west,
+	legend style={font=\small, cells={align=left}, at={(1.15,0.95)},anchor=north},
+	legend cell align={left}]
+
+\node (o) at (axis cs: 0,0){};
+
+%ESPVR and Afterload lines
+\addplot[name path=afterload,red, thick, dashed, domain=30:150, forget plot] {-0.8*x+120};
+\addplot[name path=contractility,blue, thick, dashed, domain=0:100, forget plot] {1.581*x+20.95};
+
+\path [name intersections={of=contractility and afterload,by=A}];
+
+
+%EDPVR
+\addplot[name path=bot, black, thick, domain=70:150, forget plot] {-0.400992 - (-0.002991122/-0.03458544)*(1 - e^(+0.03458544*x))};
+\addplot[black, thick, dashed, domain=150:170, forget plot] {-0.400992 - (-0.002991122/-0.03458544)*(1 - e^(+0.03458544*x))};
+
+%IVC
+
+%Ejection
+%\addplot[name path=top, black, thick, domain=50:120, forget plot] {-60 + 4.938095*x - 0.03714286*x^2 + 0.00004761905*x^3};
+\draw[black, thick] plot[smooth,tension=0.6] coordinates { (axis cs: 150,15) (axis cs: 130,80) (axis cs: 80,105) (axis cs: 42,86) (axis cs: 50,30) (axis cs: 70,0.48)};
+
+
+%IVR
+
+
+%normal loop
+\addplot[name path=bot, black, thin, dashed, domain=50:120, forget plot] {-0.400992 - (-0.002991122/-0.03458544)*(1 - e^(+0.03458544*x))};
+\draw[black,thin, dashed] (axis cs: 120,5) -- (axis cs: 120,80);
+\addplot[name path=top, black, thin, dashed, domain=50:120, forget plot] {-60 + 4.938095*x - 0.03714286*x^2 + 0.00004761905*x^3};
+\draw[black, thin, dashed] (axis cs: 50,100) -- (axis cs: 50,0);
+\addplot[red, thin, dashed, domain=30:120, forget plot] {-1.43*x+171.06};
+
+%legend
+\addlegendimage{black, thin, dashed};
+\addlegendentry{Normal};
+\addlegendimage{black, thick};
+\addlegendentry{Mitral Regurgitation};
+\addlegendimage{black, dashed, thick};
+\addlegendentry{Ventricular Elastance \\ (EDPVR)}
+\addlegendimage{red, dashed, thick};
+\addlegendentry{Afterload Line}
+\addlegendimage{blue, dashed, thick};
+\addlegendentry{Contractility \\ (ESPVR)}
+
+
+
+\end{axis}
+
+\end{tikzpicture} 
+\end{document}

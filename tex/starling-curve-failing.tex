@@ -1,0 +1,36 @@
+\documentclass{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.7}
+
+\begin{document}
+\begin{tikzpicture}
+
+
+\begin{axis}[
+        axis lines=middle,
+        grid = major,
+        grid style={dashed, gray!30},
+	ymin = 0,
+	ymax = 100,
+	xmin = 0,
+xmax =200,
+        grid = major,
+	 ylabel near ticks,
+	xlabel near ticks,
+        xlabel=End-Diastolic Volume (ml),
+        ylabel=Stroke volume (ml),
+        tick align=outside,
+        enlargelimits=false,
+legend pos= north west,
+legend style={font=\small, cells={align=left}},
+legend cell align={left}]
+
+\plot[domain=30:200, black, thick,samples=500] {-17.88721 + 0.9054709*x - 0.003357335*x^2};
+\addlegendentry{Failing Ventricle}
+
+
+
+\end{axis}
+
+\end{tikzpicture} 
+\end{document}

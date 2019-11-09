@@ -1,0 +1,44 @@
+\documentclass{standalone}
+\usepackage{pgfplots}
+\usetikzlibrary{shapes.geometric, intersections}
+\pgfplotsset{compat=1.7}
+
+\begin{document}
+\begin{tikzpicture}
+st
+    \begin{axis}[
+        axis x line=middle,
+        axis y line=middle,
+        x tick label style={/pgf/number format/fixed,
+                            /pgf/number format/fixed zerofill,
+                            /pgf/number format/precision=1},
+        y tick label style={/pgf/number format/fixed,
+                            /pgf/number format/fixed zerofill,
+                            /pgf/number format/precision=0},
+        grid = major,
+        grid style={dashed, gray!30},
+        xmin=0,     % start the diagram at this x-coordinate
+        xmax= 0.6,    % end   the diagram at this x-coordinate
+        ymin= 0,     % start the diagram at this y-coordinate
+        ymax= 102,   % end   the diagram at this y-coordinate
+        %axis background/.style={fill=white},
+    	  x label style={at={(axis description cs:0.5,-0.1)},anchor=north},
+	  y label style={at={(axis description cs:-0.1,.5)},rotate=90,anchor=south},
+	  xticklabels={},
+	 ylabel near ticks,
+	xlabel near ticks,
+        xlabel=Log\textsubscript{10}Dose,
+        ylabel=Response (\%),
+        tick align=outside,
+        enlargelimits=false,
+legend pos = south east,
+legend style={cells={align=left}}
+]
+	\coordinate (o) at (0,0);
+     \addplot[domain=0:0.6, blue, thick,samples=500] {100*(1/(1+exp(-30*(x-0.2))))};
+     \addplot[domain=0.0:0.6, red, thick,samples=500] {100*(1/(1+exp(-25*(x-0.3))))};
+\end{axis}
+
+\end{tikzpicture} 
+\end{document}
+

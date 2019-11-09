@@ -1,0 +1,45 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usetikzlibrary{arrows,calc}
+
+\begin{document}
+
+\begin{tikzpicture}
+% boxes
+\node[draw,minimum width=3cm, minimum height=3cm] (a) at (0,0) {V\textsubscript{1}};
+\node[draw,minimum width=2cm, minimum height=3cm] (b) at (5,0) {V\textsubscript{2}};
+\node[draw,minimum width=5cm, minimum height=3cm] (c) at (-6.5,0) {V\textsubscript{3}};
+
+\node[draw,circle, minimum width=2cm, minimum height=2cm] (d) at (3,-3.5) {Effect Site};
+
+% compute a point in the middle between E and NE or W and NW, then draw a line between these two
+\path (a.east) -- (a.north east) coordinate[pos=0.5] (a1);
+\path (b.west) -- (b.north west) coordinate[pos=0.5] (b1);
+\draw[latex-] (a1) -- node[above, black]{k\textsubscript{21}} (b1);
+
+\path (a.east) -- (a.north east) coordinate[pos=-0.5] (a2);
+\path (b.west) -- (b.north west) coordinate[pos=-0.5] (b2);
+\draw[latex-] (b2) -- node[above, black]{k\textsubscript{12}} (a2);
+
+\path (a.west) -- (a.north west) coordinate[pos=0.5] (a3);
+\path (c.east) -- (c.north east) coordinate[pos=0.5] (c1);
+\draw[latex-] (a3) -- node[above, black]{k\textsubscript{31}} (c1);
+
+\path (a.west) -- (a.south west) coordinate[pos=0.5] (a4);
+\path (c.east) -- (c.south east) coordinate[pos=0.5] (c2);
+\draw[latex-] (c2) -- node[above, black]{k\textsubscript{13}} (a4);
+
+\draw[->, black] (0,2.5) node[above, black]{Drug Delivery} --   (a.north);
+
+\path (a.south) -- (a.south west) coordinate[pos=0.5] (a5);
+\draw[->, latex-] (-0.75,-2.5) --  node[left, black]{k\textsubscript{10}} (a5);
+
+\path (a.south) -- (a.south east) coordinate[pos=0.5] (a6);
+\draw[latex-] (d) -- node[above right, black]{k\textsubscript{1e}} (a6);
+
+\draw[->, latex-] (0,-3.5) --  node[above, black]{k\textsubscript{e0}} (d);
+
+
+\end{tikzpicture}
+
+\end{document}

@@ -1,0 +1,35 @@
+\documentclass{article}
+
+\usepackage[latin1]{inputenc}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows}
+
+%%%<
+\usepackage{verbatim}
+\usepackage[active,tightpage]{preview}
+\PreviewEnvironment{tikzpicture}
+\setlength\PreviewBorder{5pt}%
+%%%>
+
+
+\begin{document}
+\pagestyle{empty}
+
+
+\begin{tikzpicture}[node distance = 2cm, auto]
+
+\node [circle,fill=black,inner sep=0pt,minimum size=5pt] at (0,3){};
+\node [black] at (0,3.5){Outlier};
+
+\draw[black,thick] (1, 3) -- (3,3);
+\draw[black,thick] (1, 2.7) node[below]{10\textsuperscript{th} Centile} -- (1,3.3);
+
+\draw[black,thick] (3, 1) node[below]{25\textsuperscript{th} Centile} -- (3,5) -- (5,5) -- (5,1) -- cycle;
+\draw[black,thick] (5, 1) -- (5,5) node[above]{Median}-- (9,5) -- (9,1) node[below]{75\textsuperscript{th} Centile} -- cycle;
+\draw[black,thick] (9, 3) -- (14,3);
+\draw[black,thick] (14, 2.7) node[below]{90\textsuperscript{th} Centile} -- (14,3.3);
+
+\end{tikzpicture}
+
+
+\end{document}

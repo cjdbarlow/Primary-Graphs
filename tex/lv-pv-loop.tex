@@ -1,0 +1,78 @@
+\documentclass{standalone}
+\usepackage{pgfplots}
+\usetikzlibrary{intersections}
+\usepgfplotslibrary{fillbetween}
+\pgfplotsset{compat=1.7}
+\pgfplotsset{
+    legend image with text/.style={
+        legend image code/.code={%
+            \node[anchor=center] at (0.3cm,0cm) {#1};
+        }
+    },
+}
+
+
+\begin{document}
+\begin{tikzpicture}
+
+
+
+\begin{axis}[
+        axis lines=middle,
+        grid = major,
+        grid style={dashed, gray!30},
+	ymin = 0,
+	ymax = 150,
+	xmin = 20,
+	xmax =220,
+	 ylabel near ticks,
+	xlabel near ticks,
+	extra y ticks={120},
+	extra x ticks={120},
+        xlabel=Volume (ml),
+        ylabel=Pressure (mmHg),
+        tick align=outside,
+        enlargelimits=false,
+	legend pos= north west,
+	legend style={font=\small, cells={align=left}, at={(0.95,0.95)},anchor=north},
+legend cell align={left}]
+
+\addplot[red, thick, dashed, domain=30:120, forget plot] {-1.43*x+171.06};
+\addplot[blue, thick, dashed, domain=0:100, forget plot] {1.581*x+20.95};
+
+\addplot[name path=bot, black, thick, domain=50:120, forget plot] {-0.400992 - (-0.002991122/-0.03458544)*(1 - e^(+0.03458544*x))};
+\addplot[black, thick, dashed, domain=120:160, forget plot] {-0.400992 - (-0.002991122/-0.03458544)*(1 - e^(+0.03458544*x))};
+
+\draw[black,thick] (axis cs: 120,5) node[circle,fill=black,inner sep=0pt,minimum size=3pt]{} node[black, above right]{C} -- (axis cs: 120,80) node[circle,fill=black,inner sep=0pt,minimum size=3pt]{} node[black, above right]{D};
+
+\addplot[name path=top, black, thick, domain=50:120, forget plot] {-60 + 4.938095*x - 0.03714286*x^2 + 0.00004761905*x^3};
+
+\draw[black, thick] (axis cs: 50,100) node[circle,fill=black,inner sep=0pt,minimum size=3pt]{} node[black, above left]{A} -- (axis cs: 50,0) node[circle,fill=black,inner sep=0pt,minimum size=3pt]{} node[black, above left]{B};
+
+\draw[black, thick, dashed, <->] (axis cs: 50,50) -- node[black, above, font=\small]{Stroke Volume} (axis cs: 120,50);
+
+\addlegendimage{black, dashed, thick};
+\addlegendentry{Ventricular Elastance \\ (EDPVR)}
+\addlegendimage{red, dashed, thick};
+\addlegendentry{Afterload Line}
+\addlegendimage{blue, dashed, thick};
+\addlegendentry{Contractility \\ (ESPVR)}
+\addlegendimage{legend image with text=A:}
+\addlegendentry{Aortic Valve Closes};
+\addlegendimage{legend image with text=B:}
+\addlegendentry{Mitral Valve Opens};
+\addlegendimage{legend image with text=C:}
+\addlegendentry{Mitral Valve Closes};
+\addlegendimage{legend image with text=D:}
+\addlegendentry{Aortic Valve Opens};
+
+
+\addplot[fill=blue,opacity=0.2] fill between [of=top and bot];
+\addlegendentry{Stroke Work};
+
+
+
+\end{axis}
+
+\end{tikzpicture} 
+\end{document}

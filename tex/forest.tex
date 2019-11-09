@@ -1,0 +1,38 @@
+\documentclass{standalone}
+
+\usepackage{pgfplots}
+\usepackage{filecontents}
+\usetikzlibrary{shapes.geometric}
+\pgfplotsset{compat=1.12}
+
+\begin{filecontents}{data.txt}
+y x plusError minusError
+{Overall} 0.9 0.00 0.0
+{Study 4} 1.4 0.2 0.2
+{Study 3} 0.8 0.2 0.2
+{Study 2} 0.4 0.1 0.1
+{Study 1} 1.4 0.6 0.6
+\end{filecontents}
+
+\begin{document}
+\noindent
+\begin{tikzpicture}
+  \begin{axis}[
+	ytick=data,
+	yticklabels from table={data.txt}{y},
+	grid=major, 
+	xlabel near ticks,
+        xlabel=Odds Ratio,
+	major grid style={dashed, gray!30}, xtick={-1,0,...,3},
+	tick style={draw=none}]
+    % Confidence intervals
+
+    \addplot [blue, only marks, mark=*, error bars/.cd, error mark=none, x dir=both, x explicit]
+             table [x=x, y expr=\coordindex, x error plus=plusError, x error minus=minusError] {data.txt};
+    % 0 line
+    \draw [thick, dashed] (1, -5) -- (1, 5);
+	\node[draw, diamond, blue, fill=blue] at (0.9,0) {};
+
+  \end{axis}
+\end{tikzpicture}
+\end{document}

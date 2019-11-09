@@ -1,0 +1,61 @@
+\documentclass{standalone}
+\usepackage{pgfplots}
+\usetikzlibrary{intersections}
+\usepgfplotslibrary{fillbetween}
+\pgfplotsset{compat=1.7}
+
+\begin{document}
+\begin{tikzpicture}
+
+\begin{axis}[
+        axis lines=middle,
+        grid = major,
+        grid style={dashed, gray!30},
+	ymin = 0,
+	ymax = 170,
+	xmin = 20,
+	xmax =220,
+	 ylabel near ticks,
+	xlabel near ticks,
+        xlabel=Volume (ml),
+        ylabel=Pressure (mmHg),
+        tick align=outside,
+        enlargelimits=false,
+	legend pos= north west,
+	legend style={font=\small, cells={align=left}, at={(0.95,0.95)},anchor=north},
+legend cell align={left}]
+
+\addplot[name path=bot, black, thick, domain=64:150, forget plot] {-0.400992 - (-0.002991122/-0.03458544)*(1 - e^(+0.03458544*x))};
+\addplot[black, thick, dashed, domain=150:175, forget plot] {-0.400992 - (-0.002991122/-0.03458544)*(1 - e^(+0.03458544*x))};
+
+\draw[black,thick] (axis cs: 150,15) -- (axis cs: 150,90);
+
+\addplot[name path=top, black, thick, domain=64:150, forget plot] {-104.33 + 5.764387*x - 0.0385479*x^2 + 0.00005837025*x^3};
+
+\draw[black, thick] (axis cs: 64,122) -- (axis cs: 64,0);
+
+\addplot[red, thick, dashed, domain=45:150, forget plot] {-1.43*x+214.5};
+\addplot[blue, thick, dashed, domain=0:90, forget plot] {1.581*x+20.95};
+
+\addlegendimage{black, thin, dashed};
+\addlegendentry{Normal};
+\addlegendimage{black, thick};
+\addlegendentry{Increased Preload};
+\addlegendimage{black, dashed, thick};
+\addlegendentry{Ventricular Elastance \\ (EDPVR)}
+\addlegendimage{red, dashed, thick};
+\addlegendentry{Afterload Line}
+\addlegendimage{blue, dashed, thick};
+\addlegendentry{Contractility \\ (ESPVR)}
+
+%normal loop
+\addplot[name path=bot, black, thin, dashed, domain=50:120, forget plot] {-0.400992 - (-0.002991122/-0.03458544)*(1 - e^(+0.03458544*x))};
+\draw[black,thin, dashed] (axis cs: 120,5) -- (axis cs: 120,80);
+\addplot[name path=top, black, thin, dashed, domain=50:120, forget plot] {-60 + 4.938095*x - 0.03714286*x^2 + 0.00004761905*x^3};
+\draw[black, thin, dashed] (axis cs: 50,100) -- (axis cs: 50,0);
+\addplot[red, thin, dashed, domain=30:120, forget plot] {-1.43*x+171.06};
+
+\end{axis}
+
+\end{tikzpicture} 
+\end{document}

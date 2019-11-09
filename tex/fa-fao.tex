@@ -1,0 +1,31 @@
+\documentclass{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.7}
+
+\begin{document}
+\begin{tikzpicture}
+
+
+\begin{axis}[
+        axis lines=middle,
+	ymin = 0,
+	ymax = 3,
+	xmin = 0,
+xmax =120,
+yticklabels={,,0.01,0.1,1},
+        grid = major,
+        grid style={dashed, gray!30},
+	 ylabel near ticks,
+	xlabel near ticks,
+        xlabel=Time (min),
+        ylabel=$\frac{F_A}{F_{A_0}}$,
+        tick align=outside,
+        enlargelimits=false,
+legend pos= south east,
+legend style={font=\small, cells={align=left}}]
+
+\plot[domain=0:120, blue, thick,samples=500] {1.8*exp(-0.03*(x+2))+1};
+\end{axis}
+
+\end{tikzpicture} 
+\end{document}

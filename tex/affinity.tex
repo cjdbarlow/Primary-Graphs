@@ -1,0 +1,123 @@
+\documentclass{standalone}
+\usepackage{pgfplots}
+\usetikzlibrary{shapes.geometric, intersections}
+\pgfplotsset{compat=1.7}
+
+\begin{document}
+\begin{tikzpicture}
+
+\tikzset{
+    myarrow/.style={
+        sloped,
+        isosceles triangle,
+        anchor=apex,
+        fill=black,
+        inner sep=2pt
+    }
+}
+
+\makeatletter
+\def\parsenode[#1]#2\pgf@nil{%
+    \tikzset{label node/.style={#1}}
+    \def\nodetext{#2}
+}
+
+\tikzset{
+    add node at x/.style 2 args={
+        name path global=plot line,
+        /pgfplots/execute at end plot visualization/.append={
+                \begingroup
+                \@ifnextchar[{\parsenode}{\parsenode[]}#2\pgf@nil
+            \path [name path global = position line #1-1]
+                ({axis cs:#1,0}|-{rel axis cs:0,0}) --
+                ({axis cs:#1,0}|-{rel axis cs:0,1});
+            \path [xshift=1pt, name path global = position line #1-2]
+                ({axis cs:#1,0}|-{rel axis cs:0,0}) --
+                ({axis cs:#1,0}|-{rel axis cs:0,1});
+            \path [
+                name intersections={
+                    of={plot line and position line #1-1},
+                    name=left intersection
+                },
+                name intersections={
+                    of={plot line and position line #1-2},
+                    name=right intersection
+                },
+                label node/.append style={pos=1}
+            ] (left intersection-1) -- (right intersection-1)
+            node [label node]{\nodetext};
+            \endgroup
+        }
+    },
+    add node at y/.style 2 args={
+        name path global=plot line,
+        /pgfplots/execute at end plot visualization/.append={
+                \begingroup
+                \@ifnextchar[{\parsenode}{\parsenode[]}#2\pgf@nil
+            \path [name path global = position line #1-1]
+                ({axis cs:0,#1}-|{rel axis cs:0,0}) --
+                ({axis cs:0,#1}-|{rel axis cs:1,1});
+            \path [yshift=1pt, name path global = position line #1-2]
+                ({axis cs:0,#1}-|{rel axis cs:0,0}) --
+                ({axis cs:0,#1}-|{rel axis cs:1,1});
+            \path [
+                name intersections={
+                    of={plot line and position line #1-1},
+                    name=left intersection
+                },
+                name intersections={
+                    of={plot line and position line #1-2},
+                    name=right intersection
+                },
+                label node/.append style={pos=1}
+            ] (left intersection-1) -- (right intersection-1)
+            node [label node] {\nodetext};
+            \endgroup
+        }
+    }
+}
+\makeatother
+    \begin{axis}[
+        axis x line=middle,
+        axis y line=middle,
+        x tick label style={/pgf/number format/fixed,
+                            /pgf/number format/fixed zerofill,
+                            /pgf/number format/precision=1},
+        y tick label style={/pgf/number format/fixed,
+                            /pgf/number format/fixed zerofill,
+                            /pgf/number format/precision=0},
+        grid = major,
+        width=16cm,
+        height=8cm,
+        grid style={dashed, gray!30},
+        xmin=0,     % start the diagram at this x-coordinate
+        xmax= 5,    % end   the diagram at this x-coordinate
+        ymin= 0,     % start the diagram at this y-coordinate
+        ymax= 100,   % end   the diagram at this y-coordinate
+        %axis background/.style={fill=white},
+    	  x label style={at={(axis description cs:0.5,-0.1)},anchor=north},
+	  y label style={at={(axis description cs:-0.1,.5)},rotate=90,anchor=south},
+	  xticklabels={},
+	 yticklabels={},
+	extra y ticks={50},
+	extra y tick labels = {50},
+	 ylabel near ticks,
+	xlabel near ticks,
+        xlabel=Drug concentration (mmol.L\textsuperscript{-1}),
+        ylabel=Receptors Occupied (\%),
+        tick align=outside,
+        enlargelimits=false]
+	\coordinate (o) (0,0);
+	\addplot[domain=0:5, blue, ultra thick,samples=500, add node at y={49.5}{[name=node1,circle,fill=blue,inner sep=0pt,minimum size=5pt]{}}] {100*(1-exp(-x)) - 4.74 + 0.0474*x};
+	\draw[black, thin, dashed] (node1) -- node[below right]{K\textsubscript{D}} (node1 |- o);
+	\draw[black, thin, dashed] (node1) -- (o |- node1);
+
+
+
+
+
+
+\end{axis}
+
+\end{tikzpicture} 
+\end{document}

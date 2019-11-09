@@ -1,0 +1,39 @@
+\documentclass{standalone}
+\usepackage{pgfplots}
+\usetikzlibrary{shapes.geometric, intersections}
+\pgfplotsset{compat=1.7}
+
+\begin{document}
+\begin{tikzpicture}
+
+    \begin{axis}[
+axis x line=bottom,
+  axis y line=left,
+	ymin = 0,
+	ymax = 50,
+	xmin = 0,
+xmax = 210,
+        grid = major,
+        grid style={dashed, gray!30},
+	 ylabel near ticks,
+	xlabel near ticks,
+	xticklabels={},
+        xlabel=Time (s),
+        ylabel=End-Tidal CO\textsubscript{2} (mmHg),
+        tick align=outside,
+        enlargelimits=false,]
+
+ \addplot[domain=0:58, black, thick,samples=500] {35*(1/(1+exp(-0.5*(x-15))))+0.05*x};
+ \addplot[domain=58:105, black, thick,samples=500] {38*(1/(1+exp(5*(x-60))))} node[above left, black]{1};
+
+ \addplot[domain=105:163, black, thick,samples=500] {35*(1/(1+exp(-0.5*(x-120))))+0.05*(x-105)} node[left,black, pos=0.35]{2} node[above,black, pos=0.76]{3};
+ \addplot[domain=163:210, black, thick,samples=500] {38*(1/(1+exp(5*(x-165))))} node[right,black, pos=0.23]{4};
+
+%\draw[black, thick] plot[smooth,tension=0.3] coordinates { (axis cs: 0,1) (axis cs: 10, 1) (axis cs: 15,15) (axis cs: 20, 33) (axis cs: 25,35) (axis cs: 40, 37) (axis cs: 42,5) (axis cs: 45,1)};
+
+
+
+\end{axis}
+
+\end{tikzpicture} 
+\end{document}

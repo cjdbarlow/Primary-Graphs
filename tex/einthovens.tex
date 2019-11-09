@@ -1,0 +1,18 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\begin{document}
+\begin{tikzpicture}
+
+\draw [thick,black] (0, 20) node[above left, black]{RA} -- node[above, black]{I} (20,20) node[above right, black]{LA} -- node[right, black]{III} (10,7) node[below, black]{LL}-- node[left, black]{II}cycle;
+\draw [thick, black, dashed, ->] (10, 16) node[circle,fill=black,inner sep=0pt,minimum size=5pt]{} node[below right, black]{Indifferent Electrode}-- node[above right, black]{aVR} (0.15,19.9);
+\draw [thick, black, dashed, ->] (10, 16) -- node[above left, black]{aVL} (19.8,19.9);
+\draw [thick, black, dashed, ->] (10, 16) -- node[right, black]{aVF} (10,7.1);
+
+\draw[thick, black, ->](0,20) --( 10,20);
+\draw[thick, black, ->](20,20) --( 15,13.5);
+\draw[thick, black, ->](0,20) --( 5,13.5);
+
+
+
+\end{tikzpicture}
+\end{document}

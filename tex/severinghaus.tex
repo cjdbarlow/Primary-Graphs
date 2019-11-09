@@ -1,0 +1,47 @@
+\documentclass{article}
+
+\usepackage[latin1]{inputenc}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows}
+
+%%%<
+\usepackage{verbatim}
+\usepackage[active,tightpage]{preview}
+\PreviewEnvironment{tikzpicture}
+\setlength\PreviewBorder{5pt}%
+%%%>
+
+
+\begin{document}
+\pagestyle{empty}
+
+
+% Define block styles
+
+\tikzstyle{block} = [rectangle, draw, fill=black, text=white, text width=5em, text centered, minimum height=1]
+\tikzstyle{electrode} = [circle, draw, fill=blue!20, minimum height=4em]
+
+\tikzstyle{line} = [draw, -latex']
+
+    
+\begin{tikzpicture}[node distance = 2cm, auto]
+
+\draw [black, thick, fill=green!80!black] (-1,0)--(-5,0)--(-5,5)-- node[above, black]{KCl Chamber}(-1,5) -- cycle;
+\draw [black, thick, name=membrane] (0,0) -- (-1, 0) -- (-1,5.5) -- node[above,black]{H\textsuperscript{+} Sensitive Glass}  (0, 5.5) -- cycle;
+\draw [black, thick, fill=gray!80] (0,0)--(4,0)--(4,5)-- node[above, black]{Bicarbonate Solution}(0,5) -- cycle;
+\draw [black, thick, name=membrane] (4,0) -- (5, 0) -- (5,5.5) -- node[above,black]{H\textsuperscript{+} Sensitive Glass}   (4, 5.5) -- cycle;
+\draw [black, thick, fill=blue!50!black] (5,0)--(9,0)--(9,5)-- node[above, black]{Buffer Solution}(5,5) -- cycle;
+\draw[black, thick, fill=yellow!50] (0,0)--(4,0) -- (4,-1) -- node[above, black, align=center]{CO\textsubscript{2} permeable \\ membrane} (0,-1) -- cycle;
+\draw [black, thick, fill=red!80] (0,-1)--(4,-1)--(4,-5)-- node[below, black]{Blood Chamber}(0,-5) -- cycle;
+
+\node [block] (init) at (-3,2.5) {HgCl Electrode};
+\node [block] (init) at (7,2.5) {AgCl Electrode};
+
+\draw [thick, dashed] (-3,2.5) -- (-6,2.5) -- (-6, 7) -- (10,7) -- (10,2.5) -- (7,2.5);
+
+\node [circle, draw, color=black, fill=white, thick, inner sep = 1pt] at (2, 7){Voltmeter}; 
+
+\end{tikzpicture}
+
+
+\end{document}

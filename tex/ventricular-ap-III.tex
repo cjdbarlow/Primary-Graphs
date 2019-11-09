@@ -1,0 +1,40 @@
+\documentclass{standalone}
+\usepackage{pgfplots}
+\usetikzlibrary{shapes.geometric, intersections}
+\pgfplotsset{compat=1.7}
+
+\begin{document}
+\begin{tikzpicture}
+
+    \begin{axis}[
+axis x line=bottom,
+  axis y line=left,
+	ymin = -90,
+	ymax = 40,
+	xmin = -20,
+xmax = 400,
+        grid = major,
+        grid style={dashed, gray!30},
+	 ylabel near ticks,
+	xlabel near ticks,
+        xlabel=Time (ms),
+        ylabel=Membrane Potential (mV),
+        tick align=outside,
+        enlargelimits=false,
+legend entries={Normal, Class III},
+legend style={font=\small, cells={align=left}},
+legend cell align={left}]
+
+\draw[black, thick] plot[smooth,tension=0.3] coordinates { (axis cs: -20,-85) (axis cs: 0,-84) (axis cs: 4,-70) (axis cs: 10,30)};
+\draw[black, thick] plot[smooth,tension=0.3] coordinates { (axis cs: 10,30) (axis cs: 30,20) (axis cs: 200,15) (axis cs: 260,-50) (axis cs: 300, -83) (axis cs: 400,-85)};
+
+\draw[orange,dashed, thick] plot[smooth,tension=0.3] coordinates { (axis cs: -20,-85) (axis cs: 0,-84) (axis cs: 4,-70) (axis cs: 10,30)};
+\draw[orange,dashed, thick] plot[smooth,tension=0.3] coordinates { (axis cs: 10,30) (axis cs: 30,20) (axis cs: 240,15) (axis cs: 300,-50) (axis cs: 340, -83) (axis cs: 440,-85)};
+
+  \addlegendimage{black, thick};
+    \addlegendimage{orange, dashed, thick};
+
+\end{axis}
+
+\end{tikzpicture} 
+\end{document}
