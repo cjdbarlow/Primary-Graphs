@@ -1,0 +1,34 @@
+\documentclass[tikz,border=2pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{intersections}
+\usepgfplotslibrary{fillbetween}
+
+\begin{document}
+	\begin{tikzpicture}
+		\begin{axis}[
+			axis lines=middle,
+			ymin = 0,
+			ymax = 30,
+			xmin = 0,
+			xmax= 45,
+			grid = major,
+			grid style={dashed, gray!30},
+			ylabel near ticks,
+			xlabel near ticks,
+			xtick={13, 27, 40},
+			xticklabels={13,27,40},
+			xlabel= Weeks Gestation,
+			ylabel= Heart Rate (\% Change),
+			tick align=outside,
+			legend pos= north east,
+			legend style={font=\small, cells={align=left}}]
+	
+		\draw [blue, thick] (0,0) to [out = 60, in = 230] (13,15)  node[circle,fill=blue,inner sep=0pt, label={[text = black]120:15\%}, minimum size = 5pt]{} to [out = 50, in = 190] (40,25) node[circle,fill=blue,inner sep=0pt, label={[text = black]25\%}, minimum size = 5pt]{};
+
+
+
+
+		\end{axis}
+	\end{tikzpicture} 
+\end{document}

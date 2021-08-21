@@ -1,0 +1,31 @@
+\documentclass[tikz,border=2pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{intersections}
+\usepgfplotslibrary{fillbetween}
+
+\begin{document}
+	\begin{tikzpicture}
+		\begin{axis}[
+			axis lines=middle,
+			ymin = 11,
+			ymax = 15,
+			xmin = 0,
+			xmax= 46,
+			grid = major,
+			grid style={dashed, gray!30},
+			ylabel near ticks,
+			xlabel near ticks,
+			xtick={13, 27, 40},
+			xlabel= Weeks Gestation,
+			ylabel= Hb (g.dL$^{-1}$),
+			tick align=outside,
+			legend style={font=\small, cells={align=left}}]
+
+
+			\draw [blue, thick] (0,14) to [out = 0, in = 180] (29,12) to [out = 0, in = 190] (40,12.5);
+
+
+		\end{axis}
+	\end{tikzpicture} 
+\end{document}

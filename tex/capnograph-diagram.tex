@@ -1,0 +1,112 @@
+\documentclass[tikz,border=2pt]{standalone}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usetikzlibrary{calc}
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric}
+\pgfplotsset{compat=1.18}
+
+\begin{document}
+
+\tikzset{
+    sunflames/.style={
+        line width=0.7pt,
+        draw=darkgreen!70,
+        fill=yellow,
+        isosceles triangle,
+        isosceles triangle apex angle=40,
+        minimum size =5pt,
+       inner sep=0mm
+    },
+    sunbody/.style={
+        line width=0.7pt,
+        draw=darkgreen!70,
+        fill=yellow,
+        circle,
+        minimum size=5mm
+    }
+ }
+\definecolor{darkgreen}{RGB}{89,114,59}
+\definecolor{darkblue}{RGB}{88,124,186}
+
+\begin{tikzpicture}
+%elipse
+\node[line width=1pt,draw=darkblue,shape=ellipse,
+minimum height=40mm,minimum width=7mm,inner sep=1pt,
+bottom color=blue!10,top color=blue!10,middle color=blue!40,
+fill=blue] (ELI)at(-3,0){};
+%%
+\node[above=0mm of ELI,text width=30mm,align=center]{Filter(s)};
+%%
+%sun
+\node[left=13mm of ELI,sunbody] (TheSun) {};
+    \foreach \angle in {0,45,...,315}
+    {
+        \draw [rotate around={\angle:(TheSun.center)}]
+            ($(TheSun.center) + (0.40,0)$)
+            node[rotate around={\angle:(0,0)},sunflames] {};
+     }
+%%%
+\node[left=6mm of TheSun.west,rotate =90,anchor=center]{IR Source};
+%black box
+\node[fill=black,minimum width=9mm,
+minimum height=9mm] (BB) at (4.95,0) {};
+\node[right=4mm of BB,anchor=center,rotate=90]{Processor};
+\node[above left =2mm and 5mm of BB,
+anchor=south east,draw=darkblue!50!black!85,
+line width=1pt,
+label={[above=2mm]Detector},
+minimum width=7mm,
+minimum height=9mm] (UB) {};
+\node[below left =2mm and 5mm of BB,
+anchor=north east,draw=darkblue!50!black!85,
+line width=1pt,
+minimum width=7mm,
+minimum height=9mm] (DB) {};
+
+%graybox
+\node[above right =5mm and 15mm of ELI.north,
+anchor=north west,draw=black,fill=black!20,
+line width=0.5pt,
+label={[above=12mm,anchor=north,line width=15mm,align=center]Water trap},
+minimum width=7mm,
+minimum height=3mm] (UGB) {};
+\node[below right =3mm and 15mm of ELI.south,
+anchor=north west,draw=black,fill=black!20,
+label={[below=18mm,anchor=south,line width=15mm,align=center]150 mL/min},
+line width=0.5pt,
+minimum width=7mm,
+minimum height=3mm] (DGB) {};
+%
+\draw[line width=1pt,darkblue](UGB.south west)--(DGB.north west);
+\draw[line width=1pt,darkblue]([xshift=-1mm]UGB.south east)--++(0,-0.75)
+--++(2.5,0)node[above,black,pos=0.5,text width=20mm,align=center]{Reference gas}
+--++(90:1)coordinate(U);
+%
+\draw[line width=1pt,darkblue]([xshift=-1mm]DGB.north east)--++(0,0.75)
+--++(2.5,0)node[below,black,pos=0.5,text width=20mm,align=center]{Sample gas}
+--++(90:-1)coordinate(D);
+%
+\draw[line width=1pt,darkblue]([xshift=6.6mm]U)coordinate(UU)--([xshift=6.6mm]D)coordinate(DD);
+\draw[line width=1pt,darkblue]($(UU)!0.5!(DD)$)-|
+node[above,black,pos=0.25]{Sapphire-walled}
+node[below,black,pos=0.25]{chambers}(DGB.north west);
+%red line
+\path[line width =1pt,red,dashed](UB)-|coordinate(SU)(TheSun.center);
+\path[line width =1pt,red,dashed](DB)-|coordinate(SD)(TheSun.center);
+%
+\draw[line width =1pt,red,dashed](UB)--(SU);
+\draw[line width =1pt,red,dashed](DB)--(SD);
+%mirror
+\draw[line width=1pt,darkblue](SU)--++(45:5mm) (SU)node[above left,black]{Mirror}--++(-135:5mm);
+\draw[line width=1pt,darkblue](SD)--++(135:5mm) (SD)--++(-45:5mm);
+%arrows
+\draw[-latex,darkblue](UGB.south)--++(270:0.8);
+\draw[-latex,darkblue](DGB.north)--++(90:0.45);
+\draw[latex-,darkblue]($(U)!0.5!(UU)$)--++(270:1);
+\draw[latex-,darkblue]($(D)!0.5!(DD)$)node[below=2mm,black]{To scavenger}--++(90:1);
+%
+\draw[](BB.north)--(UB.east);
+\draw[](BB.south)--(DB.east);
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,113 @@
+\documentclass[tikz,border=2pt]{standalone}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usetikzlibrary{calc}
+\usetikzlibrary{intersections}
+\usetikzlibrary{positioning}
+\usetikzlibrary{graphs}
+\usetikzlibrary{backgrounds}
+\usetikzlibrary{plotmarks}
+\usetikzlibrary{shapes.geometric}
+
+\begin{document}
+
+\definecolor{redd}{RGB}{255,85,102}
+\begin{tikzpicture}
+\coordinate(PG)at(-4.3,5.8);
+\coordinate(PD)at(-4.3,4.6);
+%fill
+\fill[line width=1pt,fill=redd](PG)--++(10.8,0)
+arc(90:0:0.9)--++(0,-2.95)--++(0.4,0)--++(0,-0.7)coordinate(K)
+--++(-1.4,0)--++(0,2.7)arc(0:90:0.65)--(PD)--cycle;
+%
+\draw[line width=1pt](PG)--++(10.8,0)
+arc(90:0:0.9)--++(0,-2.95)--++(0.4,0);
+\draw[line width=1pt](PD)--(5.7,4.6)
+arc(90:0:0.7)--++(0,-5.6)arc(0:-90:0.65)--++(-7.1,0)
+--++(0,0.3)--++(-1.7,0)--++(0,-0.3)--++(-5.3,0)arc(90:180:0.25)
+--++(0,-3.25)arc(180:270:0.25)--++(2.5,0)arc(270:360:0.2)
+--++(0,2.2)arc(180:90:0.20)--++(2.4,0)--++(0,-0.3)--++(1.7,0)
+--++(0,0.3)--++(8.3,0)arc(270:360:0.5)--++(0,3.6)coordinate(KK)--++(0.4,0);
+%%%
+\path[line width=1pt,fill=redd](0.55,4.7)--(0.55,1.9)--(-0.30,1.9)
+--(-0.3,1.2)--(1.85,1.20)--(1.85,1.9)--(1,1.9)--(1.0,4.7)--cycle;
+\begin{scope}[yshift=-119]
+\path[line width=1pt,fill=white](0.55,4.7)--(0.55,1.2)--(1.1,1.20)
+--(1.1,4.7)--cycle;
+\end{scope}
+%left
+\draw[line width=1pt](0.55,4.6)--(0.55,1.9)--(-0.30,1.9)
+--(-0.3,0.55)--(0.55,0.55)--(0.55,-2.35);
+%right
+\draw[line width=1pt](1.0,4.6)--(1,1.9)--(1.85,1.9)
+--(1.85,0.55)--(1.1,0.55)--(1.1,-2.35);
+%zigzag
+\draw[line width=3pt,decoration={zigzag,
+segment length=0.2em, amplitude=0.8mm}](-0.3,1.2)--
+(0,1.2)decorate{--(0.2,1.2)}--(0.2,1.2)--(1.3,1.2)
+decorate{--(1.5,1.2)}--(1.5,1.2)--(1.85,1.2);
+%
+\draw[latex-](1.9,1.2)--++(1,0)node[right=-2mm,
+anchor=west,text width=30mm,align=center]
+{Differential\\ pressure transducer};
+%
+\draw[line width=2pt,-latex,dotted](-0.30,1.6)--++(-1.3,0);
+\draw[line width=2pt,-latex,dotted](-0.30,0.85)--++(-1.3,0);
+\node[line width=1pt,black,draw=black,shape=circle,
+minimum height=11mm, inner sep=1pt] (CI)at(-2.2,1.25){CE};
+\node[above=1mm of CI,text width=19mm,align=center]{Control electronics};
+\draw[line width=2pt,-latex,dotted](CI.south)--++(0,-2.78)coordinate(AM);
+\draw[line width=2pt,-latex,dotted](CI.west)-|(-4.6,-1.6);
+%
+\node[rectangle,anchor=north,
+line width=1pt,
+draw=black,minimum width=5mm, minimum height=4mm](MR)at(-4.6,-1.6){};
+\draw[line width=1pt,shorten <=-2mm,shorten >=-2mm](MR.west)--(MR.east);
+\node[rectangle,anchor=north,fill=black!70,
+draw=black!50,minimum width=15mm, minimum height=3.49mm](MR)at([yshift=2pt]MR.south){};
+\node[rectangle,anchor=north,fill=black!70,
+draw=black!70,minimum width=15mm, minimum height=3.5mm]
+(MRD)at([yshift=-11.9mm]MR.south){};
+\node[below=3mm of MRD,text width=19mm,align=center](ST){Sump shut-off valve};
+
+
+\node[line width=2pt,black,draw=black,shape=circle,
+minimum height=6mm, inner sep=1pt] (CA)at([yshift=-9mm]AM){};
+\draw[line width=2pt,,-latex](CA.center)--++(45:0.7);
+\draw[line width=2pt,](CA.center)--++(225:0.6);
+
+\path[red](ST)-|coordinate(PT)(CA);
+\node[text width=19mm,align=center]at(PT){Pressure regulating valve};
+
+\coordinate(Z1)at (-8.6,-4.5);
+\coordinate(Z2)at (-5.65,-4.5);
+\draw[line width=2pt,decorate,decoration={snake,amplitude=.2mm}](Z1)--coordinate(ZZ)
+(Z2);
+
+\node[above=3mm of ZZ,text width=19mm,align=center](T1){Desflurane\\ vapor};
+\node[below=3mm of ZZ,text width=19mm,align=center](T1){Desflurane\\ liquid};
+\node[below=18mm of ZZ](TT1){Sump @ 39$^\circ$C};
+
+\fill[fill=black!70](3.8,6)--(5.1,6){[rounded corners=4]--(5.1,5.3)--(3.8,5.3)}--(3.8,6);
+\fill[fill=black!70]((3.8,4.3)--(5.1,4.3){[rounded corners=4]--(5.1,5.0)--(3.8,5.0)}--(3.8,4.3);
+\node[text width=22mm,align=center](T2)at(4.5,6.4){Fixed Resistor};
+
+\path[red](T2.west)-|coordinate(T3)(1.6,5.5);
+\node[](T4)at([xshift=-11mm]T3){Working pressure};
+\draw[](1.6,5.5)--++(0,0.7);
+
+\draw[](3,-3)--++(0,-1.1)node[below]{Working pressure};
+\node[rectangle,anchor=south,fill=black!70,
+draw=black!70,minimum width=6mm, 
+minimum height=18mm](DDB)at(4.1,-3.2){};
+\node[rectangle,anchor=south,fill=black!70,outer sep=-1pt,
+draw=black!70,minimum width=19mm, 
+minimum height=6mm](DDBB)at(DDB.north){};
+\node[above=2mm of DDBB,
+text width=22mm,align=center](T6){Concentration control valve};
+\node[above right=6mm  and 2mm of PD,anchor=west,
+text width=22mm,align=center](T6){Inflow Gas};
+\node[right=2mm of K,anchor=west](T7){Outlet};
+
+\end{tikzpicture}
+\end{document}

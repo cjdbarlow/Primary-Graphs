@@ -1,0 +1,81 @@
+\documentclass[tikz,border=2pt]{standalone}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usetikzlibrary{calc}
+\usetikzlibrary{intersections}
+\usetikzlibrary{positioning}
+\usetikzlibrary{graphs}
+\usetikzlibrary{backgrounds}
+\usetikzlibrary{plotmarks}
+\usetikzlibrary{shapes.geometric}
+
+\begin{document}
+\definecolor{darkblue}{RGB}{88,124,186}
+
+\begin{tikzpicture}
+\draw[darkblue,line width=1pt](0,0)--(1.8,0)coordinate(K)--++(90:2mm)--++
+(0.8,0)--++(-90:2mm)--++(1.8,0)coordinate(U);
+\draw[darkblue,line width=1pt](0,-0.35)--++(0.2,0)--++(0,-4.25)coordinate(DL)--++
+(3.95,0)coordinate(DR)node[below=1mm,black,pos=0.5]{Tec 5 Schematic}--++(0,4.25)--++(0.2,0)coordinate(UU);
+%
+%zigzag
+\foreach \x/\y in {0.1/1,0.3/2,0.45/3,0.6/4,0.75/5,0.92/6}
+\draw[line width=0.7pt,darkblue,decorate,
+decoration={snake,segment length=0.35em, amplitude=.85mm}]
+($(DL)!\x!(DR)$)coordinate(DO\y)--++(0,1.5)coordinate(GO\y);
+
+\draw[shorten <=7mm,shorten >=7mm,darkblue,line width=0.7pt,]($(DL)!0.2!(DR)$)coordinate(UDL)
+--++(0,4.25)coordinate(UL)--++(0.8,0)--++(270:2mm)coordinate(KD)--++(0.85,0)
+--++(90:2mm)--++(0.8,0)coordinate(UR)--(UR|-DR)coordinate(UDR);
+
+\draw[darkblue,line width=0.7pt,]($(UL)!0.45!(UDL)$)coordinate(CL)--coordinate(C)($(UR)!0.45!(UDR)$);
+\draw[shorten <=7mm,darkblue,line width=0.7pt,]($(DL)!0.52!(DR)$)--(C);
+\draw[darkblue,line width=0.7pt]($(DL)!0.37!(DR)$)--++(0,1.85);
+\draw[darkblue,line width=0.7pt]($(DL)!0.68!(DR)$)--++(0,1.85);
+%%
+\draw[black,latex-,line width=0.7pt,]($(CL)!0.20!(UDL)$)--++(-1,0)
+node[left,black]{Baffle};
+%
+\draw[shorten <=1mm,black,latex-,line width=0.7pt,]($(DO1)!0.70!(GO1)$)--++(-0.6,0)
+node[left,black]{Wick};
+
+
+\coordinate(PO)at([yshift=-10mm,xshift=1mm]UU);
+\node[rectangle,draw=darkblue,fill=darkblue!80,
+anchor=east,inner sep=0pt,
+minimum height=1mm,minimum width=8mm](RE)at(PO){};
+\draw[darkblue,fill=darkblue!80,rounded corners=0.2](RE.north west)--
+([xshift=-2pt]$(RE.north west)!0.5!(RE.south west)$)--(RE.south west)--cycle;
+
+\node[line width=0.7pt,draw=darkblue,shape=ellipse,
+minimum height=6mm,minimum width=1.5mm,inner sep=1pt,
+fill=darkblue!80] (ELI)at(PO){}; 
+%%
+\draw[shorten <=1mm,black,latex-](ELI.north)--++(110:1.5)
+node[above,black]{Control dial};
+%
+\coordinate(KK)at([yshift=-3mm,xshift=1.8mm]K);
+\coordinate(KKD)at([yshift=-8mm,xshift=0.3mm]KD);
+%%
+\draw[line width=0.7pt,darkblue](KK) to[bend right=10](KKD);
+\draw[line width=0.7pt,darkblue]([xshift=2pt]KK) to[bend right=10]([xshift=2pt]KKD);
+%
+\draw[shorten <=1.5mm,black,latex-]($(KK)!0.5!(KKD)$)--++(130:1.5)
+node[above,black]{Bi-metallic strip};
+%
+\draw[darkblue,line width=1pt]([yshift=-2mm]KK)--++(0,0.45);
+%
+\draw[shorten <=1.5mm,black,-latex]($(KK)!0.6!(KKD)$)--++(180:0.85)
+node[below,black,pos=0.6]{Cold};
+\draw[shorten <=1.5mm,black,-latex]($(KK)!0.6!(KKD)$)--++(0:0.85)
+node[below,black,pos=0.5]{Hot};
+%
+\draw[shorten <=1mm,black,latex-,line width=0.7pt,](0.5,-0.17)--++(-1,0)node[left, black]{In};
+\draw[shorten <=1mm,black,latex-,line width=0.7pt,](4.75,-0.17)node[right, black]{Out}--++(-1,0);
+
+%
+\begin{scope}[on background layer]
+\path[fill=yellow!20](DL)rectangle([yshift=5mm]DR);
+\end{scope}
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,35 @@
+\documentclass[tikz,border=2pt]{standalone}
+\usepackage{tikz}
+\usepackage{pgfplots}
+ \usetikzlibrary{calc}
+\usetikzlibrary{intersections}
+\usetikzlibrary{positioning}
+\usetikzlibrary{graphs}
+
+\begin{document}
+\definecolor{darkblue}{RGB}{88,124,186}
+
+\begin{tikzpicture}
+%y-axis
+\draw[-latex,line width=0.5pt](0,0)--
+node[below=6mm]{Age (years)}(5.3,0);
+\foreach \x/\y in {1.16/20,2.32/40,3.48/60,4.64/80}
+\draw[darkblue](\x,0)--(\x,-0.15)node[black,below](X\y){\y};
+%x-axis
+\draw[-latex,line width=0.5pt](0,0)coordinate(O)--
+node[left=5mm,rotate=90,anchor=center]{Lung volume (mL/kg)}(0,5.6)coordinate(Y);
+%
+\draw[line width=1pt](0,0.92)coordinate(DL)--++(9:5)coordinate(DD)
+node[above,black]{RV};
+
+\draw[line width=1pt](0,2.65)coordinate(SL)--++(3.5:5)coordinate(SD)
+node[above,black]{FRC};
+
+\draw[line width=1pt](0,4.65)coordinate(GL)--++(0.5:5)coordinate(GD)
+node[above,black]{TLC};
+
+\draw[darkblue,latex-latex]($(GL)!0.38!(GD)$)--node[black,fill=white]{IRV}($(SL)!0.38!(SD)$);
+\draw[darkblue,latex-latex]($(SL)!0.38!(SD)$)--node[black,fill=white]{ERV}($(DL)!0.38!(DD)$);
+\draw[darkblue,latex-latex]($(GL)!0.65!(GD)$)--node[pos=0.56,black,fill=white]{FVC}($(DL)!0.65!(DD)$);
+\end{tikzpicture}
+\end{document}

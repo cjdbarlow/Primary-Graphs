@@ -1,0 +1,205 @@
+\documentclass[tikz,border=2pt]{standalone}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\RequirePackage{fix-cm}
+\usetikzlibrary{calc}
+\usetikzlibrary{intersections}
+\usetikzlibrary{positioning}
+\usetikzlibrary{graphs}
+\usetikzlibrary{backgrounds}
+\usetikzlibrary{plotmarks}
+
+
+\begin{document}
+
+\definecolor{bluee}{RGB}{99,150,215}
+\definecolor{redd}{RGB}{123,45,44}
+
+\begin{tikzpicture}
+\coordinate(P)at(-6.2,-3.6);
+\coordinate(PL)at(-6.8,-3.5);
+
+\draw[fill=black!40,line width=1pt](PL)--++(0,2.8) arc(180:0:2.2)--++(0,-2.8)arc(0:-180:2.2);
+\path[black,line width=1pt,fill=white](P)--++(0,3) arc(180:0:1.6)
+--++(0,-3)arc(0:-180:1.6);
+\path[line width=1pt, 
+top color=bluee!50,middle color=bluee,bottom color=bluee
+](P)--++(0,1.15)--++(3.2,0)
+--++(0,-1.15)arc(0:-180:1.6);
+\draw[line width=1pt](P)--++(0,1.15)--++(3.2,0);
+\coordinate(NO)at(-4.6,-5.7);
+\draw[line width =2pt](NO)--++(-35:1.5);
+\draw[line width =2pt](NO)--++(210:1.5);
+\draw[line width =2pt](NO)--++(295:0.7);
+\draw[black,line width=1pt](P)--++(0,3) arc(180:0:1.6)
+--++(0,-3)arc(0:-180:1.6);
+\path[fill=bluee!75](-3.10,-3.7)rectangle(-2.05,-4);
+
+\draw[black,line width=1pt,
+left color=bluee!80, right color=bluee](-3.02,-3.7)--++(4.7,0)arc(90:-90:0.15)--(-3.05,-4);
+\node[text width=25mm,align=center]at(-4.6,-3.5){Liquid Oxygen $(160^\circ$C)};
+\node[text width=35mm,align=center]at(-4.6,-0.95){Oxygen\\ Vapour\\ (7.5 atm = SVP)};
+\draw[](-3.02,-4.7)--++(1,0)node[right,text width=30mm,font=\large]{Vacuum};
+\node[]at (-1.5,-6.1){Tripod with weighing function};
+
+\begin{scope}[shift={(1.25,-3.50)},line width=0.7pt]
+\draw[fill=bluee,rounded corners=3,rotate=-45](0,0)rectangle(0.78,0.23);
+\draw[fill=bluee,rounded corners=3,anchor=north west](0.03,-0.1)rectangle(0.65,0.125);
+%%
+\begin{scope}[yshift=11.7]
+\draw[fill=bluee,rounded corners=3,rotate=-45](0,0)rectangle(0.78,0.23);
+\draw[fill=bluee,rounded corners=3,anchor=north west](0.03,-0.1)
+rectangle(0.65,0.125)coordinate(PRE);
+\draw[](PRE)--++(1,0)node[right,text width=30mm]{Pressure-raising\\ Vaporiser};
+\end{scope}
+\begin{scope}[yshift=23.4]
+\draw[fill=bluee,rounded corners=3,rotate=-45](0,0)rectangle(0.78,0.23);
+\draw[fill=bluee,rounded corners=3,anchor=north west](0.03,-0.1)rectangle(0.65,0.125);
+\end{scope}
+\begin{scope}[yshift=35.4]
+\draw[black,fill=bluee](0.3,0.02)--++(315.5:0.49)
+to[bend left=85](0.51,-0.5)--++(135:0.42)--++(-1.2,0)|-cycle;
+\end{scope}
+\end{scope}
+
+
+\draw[line width =1pt,
+fill=bluee
+](-3.75,0.74)--++(0,3.6)--++(0.3,0)coordinate(CI)--++(0,-0.65)--++(1.2,0)
+--++(0,-0.3)coordinate(BO1)--++(-1.2,0)--++(0,-0.75)--++(0.3,0)
+arc(90:0:1.7)coordinate(BT)arc(-180:0:1.4)
+--++(0.3,0)coordinate(NE)arc(0:-180:1.7)arc(0:90:1.4)--++(-0.3,0)--++(0,-1.8);
+
+
+\path[
+left color=bluee,
+middle color=-bluee,
+right color=redd!90
+]([xshift=-0.1pt]NE)arc(0:-90:1.68)
+--++(0,0.265)arc(270:360:1.39);
+ 
+\path[fill=white,
+decoration={zigzag,segment length=0.2em, amplitude=.1mm}]
+(-3.73,0.7)--(-3.73,0.8)decorate{--(-3.47,0.62)}
+-- (-3.47,0.62)--++(0,-0.43)--cycle;
+
+\node[fill=bluee,draw=bluee,shape=circle,
+minimum height=16mm,inner sep=1pt] (PO1)at(-3.6,4.95){};
+\node[top color=black!10,bottom color=black!40,
+middle color=black!20,
+draw=bluee,shape=circle,
+minimum height=14mm,inner sep=1pt] (PO2)at(-3.6,4.95){};
+\draw[-latex](PO2.center)--++(45:7mm);
+\draw[](PO2.center)--++(225:7mm);
+\draw[](PO1.north)--++(0,0.3)node[above]{7 bar};
+%
+\node[draw=black,shape=rectangle,anchor=south west,
+fill=bluee,line width=1pt,
+minimum width=34,minimum height=38](RE1)
+at([xshift=-3.5,yshift=-15]BO1){};
+\path[line width=1pt]($(RE1.north west)!0.75!(RE1.north east)$)--coordinate(CE4)
+($(RE1.south west)!0.75!(RE1.south east)$);
+
+\node[draw=black,rectangle,anchor=west,
+fill=black!50,line width=1pt,
+minimum width=12,minimum height=47](RE2)at(CE4){};
+\begin{scope}[on background layer]
+\node[red,draw=black,shape=circle,
+fill=black!50,line width=1pt,
+minimum height=3mm,inner sep=1pt] (DU)at(RE2.east){};
+\draw[line width=1pt](DU.west)--(DU.25);
+\end{scope}
+\node[right =1mm of DU,align=center]{Safety Valve};
+\node[draw=black,shape=rectangle,anchor=south west,
+fill=bluee,line width=1pt,
+minimum width=34,minimum height=38](RE1)
+at([xshift=-3.5,yshift=-15]BO1){};
+\draw[line width=1pt,
+decoration={zigzag,segment length=0.7em, amplitude=0.8mm},
+decorate](RE1.west)--(RE1.east);
+\draw[line width=1pt]($(RE1.north west)!0.75!(RE1.north east)$)--
+($(RE1.south west)!0.75!(RE1.south east)$);
+
+%
+\node[rectangle,anchor=south west,
+%
+top color=bluee!10,middle color=bluee,
+bottom color=bluee,
+minimum width=7,minimum height=24](RE3)at([yshift=22]BO1.north west){};
+
+
+\draw[black,line width=1pt,
+fill=bluee](1.10,2.62)--++(1.7,0)--++(0,0.8)coordinate(GI)
+--++(1.3,0)--++(0,-0.8)--++(0.9,0)coordinate(NN)--++(0,-0.3)-|(1.24,2.6);
+\path[left color=redd!90,middle color=bluee,
+right color=bluee,](1.24,2.6)rectangle(2.94,2.34);
+
+\draw[-latex,line width=1pt]([xshift=-5mm,yshift=-1.5mm]NN)--++(0.9,0)
+node[right]{To Pipeline};
+%\end{scope}
+\draw[]([yshift=-8]GI)--coordinate(SB)++(1.3,0);
+%
+\node[rectangle,anchor=south west,
+draw=black,fill=black!50,line width=1pt,
+minimum width=5,minimum height=19,inner sep=0pt](REG2)at([xshift=-3,yshift=-1]3.45,2.6){};
+\draw[line width=1pt]([xshift=-2]REG2.south west)--
+([xshift=2]REG2.south east);
+%
+\draw[line width=0.6pt,black,
+decoration={zigzag,segment length=0.2em, amplitude=0.8mm},
+decorate](REG2.north)--++(0,0.12);
+%
+
+\begin{scope}[shift={(1.0,1.28)},line width=0.7pt]
+\draw[fill=redd,rounded corners=3,rotate=-45](0,0)rectangle(0.78,0.23);
+\draw[fill=redd,rounded corners=3,anchor=north west](0.03,-0.1)rectangle(0.65,0.125);
+%%
+\begin{scope}[yshift=11.7]
+\draw[fill=redd,rounded corners=3,rotate=-45](0,0)rectangle(0.78,0.23)coordinate(PRE2);
+\draw[fill=redd,rounded corners=3,anchor=north west](0.03,-0.1)
+rectangle(0.65,0.125);
+\draw[](PRE2)--++(0.4,0)node[right,text width=30mm]{Superheater};
+\end{scope}
+\begin{scope}[yshift=23.4]
+\draw[fill=redd,rounded corners=3,rotate=-45](0,0)rectangle(0.78,0.23);
+\draw[fill=redd,rounded corners=3,anchor=north west](0.03,-0.1)rectangle(0.65,0.125);
+\end{scope}
+\begin{scope}[yshift=35.4]
+\draw[fill=redd,rounded corners=3,rotate=-45](0,0)rectangle(0.78,0.23);
+to[bend left=85](0.51,-0.5)--++(135:0.42)--++(-1.2,0)|-cycle;
+\end{scope}
+\end{scope}
+%
+\begin{scope}[on background layer]
+\node[rectangle,anchor=south,
+draw=black,fill=black!50,line width=1pt,
+minimum width=45,minimum height=11,inner sep=0pt](REG3)at([yshift=0]SB){};
+%
+\node[red,draw=black,shape=circle,
+fill=black!50,line width=1pt,
+minimum height=3mm,inner sep=1pt] (DU2)at(REG3.north){};
+\draw[line width=1pt](DU2.south)--(DU2.115);
+\node[rectangle,anchor=south,
+draw=black,fill=black!50,line width=1pt,
+minimum width=45,minimum height=11,inner sep=0pt](REG3)at([yshift=0]SB){};
+%
+\node[font=\large,above=1mm of DU2]{4 ATM Pressure Regulator};
+\end{scope}
+%%
+\node[rectangle,anchor=south,
+draw=black,fill=black!50,line width=1pt,
+minimum width=30,minimum height=37,inner sep=0pt](BO5)at(0,-2.6){};
+%
+\path[
+top color=bluee!95!redd!99,
+middle color=blue,
+bottom color=bluee,
+]([xshift=-4]BO5.north)--++(0,0.538)--++(0.3,0)|-cycle;
+
+\draw[line width=1pt]([xshift=-4]BO5.north)--++(0,0.525);
+\draw[line width=1pt]([xshift=4.2]BO5.north)--++(0,0.537);
+\draw[](BO5.45)--++(0.5,0)node[right]{Control Valve};
+%%
+
+\end{tikzpicture}
+\end{document}
