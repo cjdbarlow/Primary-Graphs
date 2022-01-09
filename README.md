@@ -5,7 +5,7 @@ Graphs for the CICM and ANZCA primary exams written in latex. Includes:
 * .ps  
 Contains files that `dvisvgm` couldn't convert from .dvi. Built using `dvips`, and converted with an online tool.
 * .svg  
-SVGs have been compiled from tex using [dvisvgm](dvisvgm.bplaced.net) and stripped of extraneous (and height+width data) using [SVGO](https://github.com/svg/svgo).
+SVGs have been compiled from tex using [dvisvgm](https://dvisvgm.de/) and stripped of extraneous (and height+width data) using [SVGO](https://github.com/svg/svgo).
 
 ## How-To
 (For my recollection)
